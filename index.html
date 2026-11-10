@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Equipo 8 | Biblioteca de buenas prácticas</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <div class="encabezado__contenido">
+      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas de ciberseguridad</h1>
+      <button
+        id="btnMenu"
+        class="btn-hamburguesa"
+        type="button"
+        aria-label="Abrir o cerrar menú"
+        aria-controls="menuPrincipal"
+        aria-expanded="false">
+        <span class="btn-hamburguesa__linea"></span>
+        <span class="btn-hamburguesa__linea"></span>
+        <span class="btn-hamburguesa__linea"></span>
+      </button>
+    </div>
+
+    <nav id="menuPrincipal" class="menu" aria-label="Navegación principal">
+      <ul class="menu__lista">
+        <li class="menu__item">
+          <a class="menu__enlace activo" href="index.html" aria-current="page">Inicio</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__enlace" href="agregar.html">Agregar práctica</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__enlace" href="mi-ruta.html">Mi ruta</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="principal">
+
+    <section class="seccion resumen" aria-labelledby="tituloResumen">
+      <h2 id="tituloResumen" class="seccion__titulo">Resumen</h2>
+      <div class="resumen__contadores">
+        <article class="contador">
+          <p class="contador__numero" id="statTotal">0</p>
+          <p class="contador__etiqueta">Prácticas en total</p>
+        </article>
+        <article class="contador">
+          <p class="contador__numero" id="statLeidas">0</p>
+          <p class="contador__etiqueta">Prácticas leídas</p>
+        </article>
+        <article class="contador">
+          <p class="contador__numero" id="statFavoritas">0</p>
+          <p class="contador__etiqueta">Prácticas favoritas</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="seccion filtros" aria-labelledby="tituloFiltros">
+      <h2 id="tituloFiltros" class="seccion__titulo">Buscar y filtrar</h2>
+      <form id="formFiltros" class="filtros__formulario" role="search" aria-label="Filtros de la biblioteca">
+
+        <div class="campo">
+          <label class="campo__label" for="inputBusqueda">Buscar por texto</label>
+          <input
+            class="campo__control"
+            type="search"
+            id="inputBusqueda"
+            name="busqueda"
+            placeholder="Ej: contraseña, phishing, VPN"
+            autocomplete="off">
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="selectCategoria">Categoría</label>
+          <select class="campo__control" id="selectCategoria" name="categoria">
+            <option value="todas">Todas</option>
+            <option value="contraseñas">Contraseñas</option>
+            <option value="correo">Correo</option>
+            <option value="redes">Redes</option>
+            <option value="dispositivos">Dispositivos</option>
+            <option value="desarrollo seguro">Desarrollo seguro</option>
+            <option value="privacidad">Privacidad</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="selectNivel">Nivel</label>
+          <select class="campo__control" id="selectNivel" name="nivel">
+            <option value="todos">Todos</option>
+            <option value="básico">Básico</option>
+            <option value="intermedio">Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="selectOrden">Ordenar por</label>
+          <select class="campo__control" id="selectOrden" name="orden">
+            <option value="fecha">Fecha</option>
+            <option value="nivel">Nivel</option>
+          </select>
+        </div>
+
+      </form>
+    </section>
+
+    <section class="seccion acciones" aria-labelledby="tituloAcciones">
+      <h2 id="tituloAcciones" class="seccion__titulo">Acciones</h2>
+      <div class="acciones__botones">
+        <button id="btnCargarEjemplos" class="boton boton--primario" type="button">Cargar 10 datos de ejemplo</button>
+        <button id="btnExportar" class="boton boton--secundario" type="button">Exportar a JSON</button>
+      </div>
+    </section>
+
+    <section class="seccion listado" aria-labelledby="tituloListado">
+      <h2 id="tituloListado" class="seccion__titulo">Prácticas</h2>
+      <div id="contenedorCards" class="tarjetas" aria-live="polite"></div>
+      <div id="mensajeVacio" class="mensaje-vacio" hidden>
+        <p>No hay prácticas para mostrar. Carga los datos de ejemplo o agrega una nueva práctica.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p class="pie__texto">Universidad Nacional Agraria de la selva · Carrera de Ingeniería en Ciberseguridad</p>
+    <p class="pie__texto">Curso: Programación II · Proyecto Equipo 8</p>
+  </footer>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

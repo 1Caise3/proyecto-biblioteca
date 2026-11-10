@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Equipo 8 | Mi Ruta de Aprendizaje</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <div class="encabezado__contenido">
+      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas de ciberseguridad</h1>
+      <p class="encabezado__subtitulo">Equipo 8</p>
+      <button
+        id="btnMenu"
+        class="btn-hamburguesa"
+        type="button"
+        aria-label="Abrir o cerrar menú"
+        aria-controls="menuPrincipal"
+        aria-expanded="false">
+        <span class="btn-hamburguesa__linea"></span>
+        <span class="btn-hamburguesa__linea"></span>
+        <span class="btn-hamburguesa__linea"></span>
+      </button>
+    </div>
+
+    <nav id="menuPrincipal" class="menu" aria-label="Navegación principal">
+      <ul class="menu__lista">
+        <li class="menu__item">
+          <a class="menu__enlace" href="index.html">Inicio</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__enlace" href="agregar.html">Agregar práctica</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__enlace activo" href="mi-ruta.html" aria-current="page">Mi ruta</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="principal">
+
+    <section class="seccion progreso" aria-labelledby="tituloProgreso">
+      <h2 id="tituloProgreso" class="seccion__titulo">Mi avance por categorías</h2>
+      <div id="contenedorBarras" class="barras-progreso" aria-live="polite"></div>
+    </section>
+
+    <section class="seccion favoritas" aria-labelledby="tituloFavoritas">
+      <h2 id="tituloFavoritas" class="seccion__titulo">Prácticas favoritas</h2>
+      <div id="contenedorFavoritas" class="tarjetas" aria-live="polite"></div>
+      <div id="mensajeSinFavoritas" class="mensaje-vacio" hidden>
+        <p>Aún no has marcado ninguna práctica como favorita.</p>
+      </div>
+    </section>
+
+    <section class="seccion leidas" aria-labelledby="tituloLeidas">
+      <h2 id="tituloLeidas" class="seccion__titulo">Prácticas completadas</h2>
+      <div id="contenedorLeidas" class="tarjetas" aria-live="polite"></div>
+      <div id="mensajeSinLeidas" class="mensaje-vacio" hidden>
+        <p>Aún no has completado ninguna práctica.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p class="pie__texto">Proyecto académico del Equipo 8 · Biblioteca de buenas prácticas de ciberseguridad</p>
+  </footer>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Equipo 8 | Agregar Práctica</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <div class="encabezado__contenido">
+      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas de ciberseguridad</h1>
+      <p class="encabezado__subtitulo">Equipo 8</p>
+      <button
+        id="btnMenu"
+        class="btn-hamburguesa"
+        type="button"
+        aria-label="Abrir o cerrar menú"
+        aria-controls="menuPrincipal"
+        aria-expanded="false">
+        <span class="btn-hamburguesa__linea"></span>
+        <span class="btn-hamburguesa__linea"></span>
+        <span class="btn-hamburguesa__linea"></span>
+      </button>
+    </div>
+
+    <nav id="menuPrincipal" class="menu" aria-label="Navegación principal">
+      <ul class="menu__lista">
+        <li class="menu__item">
+          <a class="menu__enlace" href="index.html">Inicio</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__enlace activo" href="agregar.html" aria-current="page">Agregar práctica</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__enlace" href="mi-ruta.html">Mi ruta</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="principal">
+
+    <section class="seccion formulario" aria-labelledby="tituloFormulario">
+      <h2 id="tituloFormulario" class="seccion__titulo">Agregar nueva práctica</h2>
+
+      <form id="formAgregarGuia" class="formulario__contenido" novalidate>
+
+        <div class="campo">
+          <label class="campo__label" for="titulo">Título de la práctica *</label>
+          <input class="campo__control" type="text" id="titulo" name="titulo" required>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="categoria">Categoría *</label>
+          <select class="campo__control" id="categoria" name="categoria" required>
+            <option value="">Selecciona una categoría</option>
+            <option value="contraseñas">Contraseñas</option>
+            <option value="correo">Correo</option>
+            <option value="redes">Redes</option>
+            <option value="dispositivos">Dispositivos</option>
+            <option value="desarrollo seguro">Desarrollo seguro</option>
+            <option value="privacidad">Privacidad</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="nivel">Nivel de dificultad *</label>
+          <select class="campo__control" id="nivel" name="nivel" required>
+            <option value="">Selecciona un nivel</option>
+            <option value="básico">Básico</option>
+            <option value="intermedio">Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="resumen">Resumen ejecutivo *</label>
+          <textarea class="campo__control" id="resumen" name="resumen" rows="3" required></textarea>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="contenido">Detalle de la buena práctica *</label>
+          <textarea class="campo__control" id="contenido" name="contenido" rows="6" required></textarea>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="etiquetas">Etiquetas (separadas por coma)</label>
+          <input class="campo__control" type="text" id="etiquetas" name="etiquetas" placeholder="Ej: mfa, contraseñas, auth">
+        </div>
+
+        <button type="submit" id="btnGuardar" class="boton boton--primario">Guardar Práctica</button>
+
+        <div id="mensajeFormulario" class="mensaje-form" hidden></div>
+
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p class="pie__texto">Proyecto académico del Equipo 8 · Biblioteca de buenas prácticas de ciberseguridad</p>
+  </footer>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
