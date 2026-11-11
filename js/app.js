@@ -79,26 +79,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const acciones = document.createElement('div');
     acciones.className = 'tarjeta__acciones';
 
-    const btnLeida = crearBoton(
-      guia.leida ? 'Leída ✓' : 'Marcar como leída',
-      guia.leida,
-      () => {
-        cambiarEstado(guia.id, 'leida');
-        alActualizar();
-      }
-    );
+    const btnLeida = crearBoton('✓ Leída', guia.leida, () => {
+      cambiarEstado(guia.id, 'leida');
+      alActualizar();
+    });
 
-    const btnFavorita = crearBoton(
-      guia.favorita ? '★ Favorita' : '☆ Marcar favorita',
-      guia.favorita,
-      () => {
-        cambiarEstado(guia.id, 'favorita');
+    const btnFavorita = crearBoton('★ Favorita', guia.favorita, () => {
+      cambiarEstado(guia.id, 'favorita');
+      alActualizar();
+    });
+
+    const btnEliminar = crearBoton('🗑 Eliminar', false, () => {
+      const confirmado = confirm('¿Seguro que deseas eliminar la práctica "' + guia.titulo + '"?');
+      if (confirmado) {
+        eliminarGuiaPorId(guia.id);
         alActualizar();
       }
-    );
+    });
+    btnEliminar.classList.add('boton--peligro');
+    btnEliminar.removeAttribute('aria-pressed');
 
     acciones.appendChild(btnLeida);
     acciones.appendChild(btnFavorita);
+    acciones.appendChild(btnEliminar);
 
     tarjeta.appendChild(badge);
     tarjeta.appendChild(titulo);
@@ -294,11 +297,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const relleno = document.createElement('div');
       relleno.className = 'barra-item__relleno';
-      relleno.style.width = porcentaje + '%';
+      relleno.style.width = '0%';
 
       pista.appendChild(relleno);
       item.appendChild(encabezado);
       item.appendChild(pista);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          relleno.style.width = porcentaje + '%';
+        });
+      });
 
       return item;
     }

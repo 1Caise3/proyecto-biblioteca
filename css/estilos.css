@@ -1,8 +1,8 @@
 :root {
-  --color-fondo: #0a0f1d;
+  --color-fondo: #f4fff5;
   --color-superficie: #141e33;
   --color-superficie-hover: #1e293b;
-  --color-primario: #84cc16;
+  --color-primario: #b81414;
   --color-secundario: #0284c7;
   --color-texto: #f8fafc;
   --color-texto-suave: #94a3b8;
@@ -537,4 +537,24 @@ textarea.campo__control {
   margin-top: 0.5rem;
   color: var(--color-texto-suave);
   font-size: 0.9rem;
+}
+
+.barra-item__relleno {
+  transition: width 0.8s ease;
+}
+
+.boton[aria-pressed="true"] {
+  background-color: var(--color-secundario);
+  color: var(--color-texto);
+}
+
+.boton--peligro {
+  background-color: transparent;
+  color: #f87171;
+  border-color: #f87171;
+}
+
+.boton--peligro:hover {
+  background-color: #f87171;
+  color: var(--color-fondo);
 }

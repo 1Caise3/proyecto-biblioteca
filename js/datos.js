@@ -103,7 +103,7 @@ const GUIAS_BASE = [
     categoria: 'desarrollo seguro',
     nivel: 'intermedio',
     resumen: 'Nunca confíes en los datos que llegan desde formularios, URLs o APIs.',
-    contenido: 'Valida tipo, longitud y formato en el servidor. Usa consultas parametrizadas contra inyección SQL y escapa la salida para prevenir XSS. En el navegador, prefiere textContent antes que innerHTML al mostrar datos.',
+    contenido: 'Valida tipo, longitud y formato en el servidor. Usa consultas parametrizadas contra inyección SQL y escapa la salida para prevenir XSS. En el navegador, muestra los datos como texto plano y nunca como código HTML.',
     etiquetas: ['xss', 'sql injection', 'validación'],
     fecha: '2026-10-22T09:00:00.000Z',
     leida: false,
@@ -136,7 +136,7 @@ function obtenerGuias() {
     const guardado = localStorage.getItem(CLAVE_ALMACENAMIENTO);
     if (guardado) {
       const guias = JSON.parse(guardado);
-      if (Array.isArray(guias) && guias.length > 0) {
+      if (Array.isArray(guias)) {
         return guias;
       }
     }
@@ -146,6 +146,12 @@ function obtenerGuias() {
   const guiasBase = copiarGuiasBase();
   guardarGuias(guiasBase);
   return guiasBase;
+}
+
+function eliminarGuiaPorId(id) {
+  const guiasActualizadas = obtenerGuias().filter((guia) => guia.id !== id);
+  guardarGuias(guiasActualizadas);
+  return guiasActualizadas;
 }
 
 function restaurarDatosEjemplo() {
