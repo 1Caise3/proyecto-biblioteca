@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
-  <title>Equipo 8 | Agregar Práctica</title>
+  <meta name="description" content="Formulario para agregar nuevos apuntes a la biblioteca de buenas prácticas de ciberseguridad.">
+  <title>Agregar Apunte | Biblioteca de Ciberseguridad</title>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
   <header class="encabezado">
     <div class="encabezado__contenido">
-      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas de ciberseguridad</h1>
-      <p class="encabezado__subtitulo">Equipo 8</p>
+      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas</h1>
+      <p class="encabezado__subtitulo">Equipo 8 · Apuntes de ciberseguridad</p>
       <button
         id="btnMenu"
         class="btn-hamburguesa"
@@ -32,7 +33,7 @@
           <a class="menu__enlace" href="index.html">Inicio</a>
         </li>
         <li class="menu__item">
-          <a class="menu__enlace activo" href="agregar.html" aria-current="page">Agregar práctica</a>
+          <a class="menu__enlace activo" href="agregar.html" aria-current="page">Agregar apunte</a>
         </li>
         <li class="menu__item">
           <a class="menu__enlace" href="mi-ruta.html">Mi ruta</a>
@@ -43,57 +44,67 @@
 
   <main class="principal">
 
+    <p class="bienvenida">
+      Escribe tu recomendación o apunte con tus propias palabras, como si se lo explicaras a un compañero de clase. Los campos con * son obligatorios.
+    </p>
+
     <section class="seccion formulario" aria-labelledby="tituloFormulario">
-      <h2 id="tituloFormulario" class="seccion__titulo">Agregar nueva práctica</h2>
+      <h2 id="tituloFormulario" class="seccion__titulo">Nuevo apunte de seguridad</h2>
 
-      <form id="formAgregarGuia" class="formulario__contenido" novalidate>
+      <form id="formAgregar" class="formulario-grid" novalidate>
 
-        <div class="campo">
-          <label class="campo__label" for="titulo">Título de la práctica *</label>
-          <input class="campo__control" type="text" id="titulo" name="titulo" required>
+        <div class="campo campo--ancho">
+          <label class="campo__label" for="titulo">Título del tema *</label>
+          <input
+            class="campo__control"
+            type="text"
+            id="titulo"
+            name="titulo"
+            maxlength="100"
+            placeholder="Ej: Qué es el phishing y cómo evitarlo en el correo universitario"
+            required>
         </div>
 
         <div class="campo">
-          <label class="campo__label" for="categoria">Categoría *</label>
+          <label class="campo__label" for="categoria">Categoría de seguridad *</label>
           <select class="campo__control" id="categoria" name="categoria" required>
-            <option value="">Selecciona una categoría</option>
-            <option value="contraseñas">Contraseñas</option>
-            <option value="correo">Correo</option>
-            <option value="redes">Redes</option>
-            <option value="dispositivos">Dispositivos</option>
-            <option value="desarrollo seguro">Desarrollo seguro</option>
-            <option value="privacidad">Privacidad</option>
+            <option value="">Elige una categoría</option>
+            <option value="contraseñas">Contraseñas seguras</option>
+            <option value="correo">Seguridad en correo</option>
+            <option value="redes">Redes y Wi-Fi público</option>
+            <option value="dispositivos">Protección de dispositivos</option>
+            <option value="desarrollo seguro">Desarrollo seguro de software</option>
+            <option value="privacidad">Privacidad digital</option>
           </select>
         </div>
 
         <div class="campo">
-          <label class="campo__label" for="nivel">Nivel de dificultad *</label>
+          <label class="campo__label" for="nivel">Prioridad de aplicación *</label>
           <select class="campo__control" id="nivel" name="nivel" required>
-            <option value="">Selecciona un nivel</option>
-            <option value="básico">Básico</option>
-            <option value="intermedio">Intermedio</option>
-            <option value="avanzado">Avanzado</option>
+            <option value="">Elige la prioridad</option>
+            <option value="básico">Básica (Recomendado para todos)</option>
+            <option value="intermedio">Intermedia (Uso diario recomendado)</option>
+            <option value="avanzado">Avanzada (Para entornos críticos)</option>
           </select>
         </div>
 
-        <div class="campo">
-          <label class="campo__label" for="resumen">Resumen ejecutivo *</label>
-          <textarea class="campo__control" id="resumen" name="resumen" rows="3" required></textarea>
+        <div class="campo campo--ancho">
+          <label class="campo__label" for="resumen">Resumen o explicación simple *</label>
+          <textarea
+            class="campo__control"
+            id="resumen"
+            name="resumen"
+            rows="6"
+            maxlength="500"
+            aria-describedby="ayudaResumen"
+            placeholder="Explica la buena práctica en palabras sencillas, sin tecnicismos innecesarios."
+            required></textarea>
+          <p id="ayudaResumen" class="campo__ayuda">Máximo 500 caracteres.</p>
         </div>
 
-        <div class="campo">
-          <label class="campo__label" for="contenido">Detalle de la buena práctica *</label>
-          <textarea class="campo__control" id="contenido" name="contenido" rows="6" required></textarea>
-        </div>
+        <button type="submit" id="btnGuardar" class="boton boton--primario">Guardar Apunte</button>
 
-        <div class="campo">
-          <label class="campo__label" for="etiquetas">Etiquetas (separadas por coma)</label>
-          <input class="campo__control" type="text" id="etiquetas" name="etiquetas" placeholder="Ej: mfa, contraseñas, auth">
-        </div>
-
-        <button type="submit" id="btnGuardar" class="boton boton--primario">Guardar Práctica</button>
-
-        <div id="mensajeFormulario" class="mensaje-form" hidden></div>
+        <div id="mensajeFormulario" class="aviso" role="status" hidden></div>
 
       </form>
     </section>
@@ -101,7 +112,8 @@
   </main>
 
   <footer class="pie">
-    <p class="pie__texto">Proyecto académico del Equipo 8 · Biblioteca de buenas prácticas de ciberseguridad</p>
+    <p class="pie__texto">Proyecto-Biblioteca · Equipo 8</p>
+    <p class="pie__texto">Asignatura: Programación II · Ingeniería en Ciberseguridad</p>
   </footer>
 
   <script src="js/datos.js"></script>
