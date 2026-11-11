@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="description" content="Ruta de aprendizaje semana por semana para dominar las buenas prácticas de ciberseguridad.">
   <title>Equipo 8 | Mi Ruta de Aprendizaje</title>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
@@ -11,8 +12,8 @@
 
   <header class="encabezado">
     <div class="encabezado__contenido">
-      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas de ciberseguridad</h1>
-      <p class="encabezado__subtitulo">Equipo 8</p>
+      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas</h1>
+      <p class="encabezado__subtitulo">Equipo 8 · Apuntes de ciberseguridad</p>
       <button
         id="btnMenu"
         class="btn-hamburguesa"
@@ -32,7 +33,7 @@
           <a class="menu__enlace" href="index.html">Inicio</a>
         </li>
         <li class="menu__item">
-          <a class="menu__enlace" href="agregar.html">Agregar práctica</a>
+          <a class="menu__enlace" href="agregar.html">Agregar apunte</a>
         </li>
         <li class="menu__item">
           <a class="menu__enlace activo" href="mi-ruta.html" aria-current="page">Mi ruta</a>
@@ -43,31 +44,40 @@
 
   <main class="principal">
 
+    <p class="bienvenida">
+      Tu plan de ruta paso a paso para dominar la seguridad digital. Cada vez que apliques o domines un tema, márcalo como completado: ¡fortalece tus conocimientos progresivamente!
+    </p>
+
     <section class="seccion progreso" aria-labelledby="tituloProgreso">
-      <h2 id="tituloProgreso" class="seccion__titulo">Mi avance por categorías</h2>
-      <div id="contenedorBarras" class="barras-progreso" aria-live="polite"></div>
-    </section>
-
-    <section class="seccion favoritas" aria-labelledby="tituloFavoritas">
-      <h2 id="tituloFavoritas" class="seccion__titulo">Prácticas favoritas</h2>
-      <div id="contenedorFavoritas" class="tarjetas" aria-live="polite"></div>
-      <div id="mensajeSinFavoritas" class="mensaje-vacio" hidden>
-        <p>Aún no has marcado ninguna práctica como favorita.</p>
+      <h2 id="tituloProgreso" class="seccion__titulo">Mi avance</h2>
+      <p id="textoProgreso" class="progreso__texto" aria-live="polite">0 de 0 temas completados (0%)</p>
+      <div
+        id="pistaProgreso"
+        class="progreso__pista"
+        role="progressbar"
+        aria-label="Avance total de mi ruta de estudio"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0">
+        <div id="rellenoProgreso" class="progreso__relleno"></div>
       </div>
+      <p id="mensajeMotivacion" class="progreso__motivacion"></p>
     </section>
 
-    <section class="seccion leidas" aria-labelledby="tituloLeidas">
-      <h2 id="tituloLeidas" class="seccion__titulo">Prácticas completadas</h2>
-      <div id="contenedorLeidas" class="tarjetas" aria-live="polite"></div>
-      <div id="mensajeSinLeidas" class="mensaje-vacio" hidden>
-        <p>Aún no has completado ninguna práctica.</p>
+    <section class="seccion ruta" aria-labelledby="tituloRuta">
+      <h2 id="tituloRuta" class="seccion__titulo">Mi plan semana por semana</h2>
+      <div id="avisoRuta" class="aviso aviso--exito" role="status" hidden></div>
+      <ol id="listaRuta" class="ruta__lista"></ol>
+      <div class="ruta__reiniciar">
+        <button id="btnReiniciarRuta" class="boton boton--secundario" type="button">Reiniciar mi ruta</button>
       </div>
     </section>
 
   </main>
 
   <footer class="pie">
-    <p class="pie__texto">Proyecto académico del Equipo 8 · Biblioteca de buenas prácticas de ciberseguridad</p>
+    <p class="pie__texto">Proyecto-Biblioteca · Equipo 8</p>
+    <p class="pie__texto">Asignatura: Programación II · Ingeniería en Ciberseguridad</p>
   </footer>
 
   <script src="js/datos.js"></script>
