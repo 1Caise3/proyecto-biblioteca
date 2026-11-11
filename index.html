@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="description" content="Mis apuntes de ciberseguridad ordenados para preparar los parciales.">
   <title>Equipo 8 | Biblioteca de buenas prácticas</title>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
@@ -11,7 +12,8 @@
 
   <header class="encabezado">
     <div class="encabezado__contenido">
-      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas de ciberseguridad</h1>""
+      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas</h1>
+      <p class="encabezado__subtitulo">Equipo 8 · Apuntes de ciberseguridad</p>
       <button
         id="btnMenu"
         class="btn-hamburguesa"
@@ -31,7 +33,7 @@
           <a class="menu__enlace activo" href="index.html" aria-current="page">Inicio</a>
         </li>
         <li class="menu__item">
-          <a class="menu__enlace" href="agregar.html">Agregar práctica</a>
+          <a class="menu__enlace" href="agregar.html">Agregar apunte</a>
         </li>
         <li class="menu__item">
           <a class="menu__enlace" href="mi-ruta.html">Mi ruta</a>
@@ -42,27 +44,31 @@
 
   <main class="principal">
 
+    <p class="bienvenida">
+      Mis apuntes para el parcial, ordenados y explicados fácil para no olvidarme de nada antes de rendir.
+    </p>
+
     <section class="seccion resumen" aria-labelledby="tituloResumen">
-      <h2 id="tituloResumen" class="seccion__titulo">Resumen</h2>
+      <h2 id="tituloResumen" class="seccion__titulo">Mi resumen</h2>
       <div class="resumen__contadores">
         <article class="contador">
           <p class="contador__numero" id="statTotal">0</p>
-          <p class="contador__etiqueta">Prácticas en total</p>
+          <p class="contador__etiqueta">Apuntes en total</p>
         </article>
         <article class="contador">
           <p class="contador__numero" id="statLeidas">0</p>
-          <p class="contador__etiqueta">Prácticas leídas</p>
+          <p class="contador__etiqueta">Apuntes leídos</p>
         </article>
         <article class="contador">
           <p class="contador__numero" id="statFavoritas">0</p>
-          <p class="contador__etiqueta">Prácticas favoritas</p>
+          <p class="contador__etiqueta">Apuntes favoritos</p>
         </article>
       </div>
     </section>
 
     <section class="seccion filtros" aria-labelledby="tituloFiltros">
       <h2 id="tituloFiltros" class="seccion__titulo">Buscar y filtrar</h2>
-      <form id="formFiltros" class="filtros__formulario" role="search" aria-label="Filtros de la biblioteca">
+      <form id="formFiltros" class="formulario-grid" role="search" aria-label="Filtros de la biblioteca">
 
         <div class="campo">
           <label class="campo__label" for="inputBusqueda">Buscar por texto</label>
@@ -89,9 +95,9 @@
         </div>
 
         <div class="campo">
-          <label class="campo__label" for="selectNivel">Nivel</label>
+          <label class="campo__label" for="selectNivel">Dificultad</label>
           <select class="campo__control" id="selectNivel" name="nivel">
-            <option value="todos">Todos</option>
+            <option value="todos">Todas</option>
             <option value="básico">Básico</option>
             <option value="intermedio">Intermedio</option>
             <option value="avanzado">Avanzado</option>
@@ -101,8 +107,8 @@
         <div class="campo">
           <label class="campo__label" for="selectOrden">Ordenar por</label>
           <select class="campo__control" id="selectOrden" name="orden">
-            <option value="fecha">Fecha</option>
-            <option value="nivel">Nivel</option>
+            <option value="fecha">Fecha (los más nuevos primero)</option>
+            <option value="nivel">Dificultad (de básico a avanzado)</option>
           </select>
         </div>
 
@@ -118,19 +124,66 @@
     </section>
 
     <section class="seccion listado" aria-labelledby="tituloListado">
-      <h2 id="tituloListado" class="seccion__titulo">Prácticas</h2>
+      <h2 id="tituloListado" class="seccion__titulo">Mis apuntes</h2>
+      <div id="avisoGlobal" class="aviso aviso--exito" role="status" hidden></div>
       <div id="contenedorCards" class="tarjetas" aria-live="polite"></div>
       <div id="mensajeVacio" class="mensaje-vacio" hidden>
-        <p>No hay prácticas para mostrar. Carga los datos de ejemplo o agrega una nueva práctica.</p>
+        <p id="textoVacio">No hay apuntes para mostrar.</p>
       </div>
     </section>
 
   </main>
 
   <footer class="pie">
-    <p class="pie__texto">Universidad Nacional Agraria de la selva · Carrera de Ingeniería en Ciberseguridad</p>
-    <p class="pie__texto">Curso: Programación II · Proyecto Equipo 8</p>
+    <p class="pie__texto">Proyecto-Biblioteca · Equipo 8</p>
+    <p class="pie__texto">Asignatura: Programación II · Ingeniería en Ciberseguridad</p>
   </footer>
+
+  <div id="modalEliminar" class="modal" aria-hidden="true">
+    <div
+      class="modal__caja"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitulo"
+      aria-describedby="modalTexto">
+
+      <div id="modalImagen" class="modal__imagen">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Estudiante preocupado con una señal de advertencia">
+          <rect width="120" height="120" fill="#fee2e2"/>
+          <polygon points="60,6 34,22 86,22" fill="#0f172a" stroke="#1e3a8a" stroke-width="3" stroke-linejoin="round"/>
+          <rect x="26" y="20" width="68" height="9" rx="2" fill="#0f172a" stroke="#1e3a8a" stroke-width="3"/>
+          <line x1="94" y1="25" x2="102" y2="46" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="102" cy="50" r="4" fill="#dc2626"/>
+          <circle cx="60" cy="62" r="26" fill="#fcd9b6"/>
+          <path d="M34 58 Q40 36 60 38 Q80 36 86 58 Q74 46 60 48 Q46 46 34 58 Z" fill="#3b2a1a"/>
+          <circle cx="50" cy="62" r="4" fill="#0f172a"/>
+          <circle cx="70" cy="62" r="4" fill="#0f172a"/>
+          <circle cx="51.5" cy="60.5" r="1.3" fill="#ffffff"/>
+          <circle cx="71.5" cy="60.5" r="1.3" fill="#ffffff"/>
+          <path d="M44 52 L55 55" stroke="#3b2a1a" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M76 52 L65 55" stroke="#3b2a1a" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M51 78 Q60 72 69 78" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+          <path d="M26 120 Q26 92 60 92 Q94 92 94 120 Z" fill="#2563eb"/>
+          <circle cx="94" cy="92" r="16" fill="#facc15" stroke="#dc2626" stroke-width="3"/>
+          <rect x="92" y="83" width="4" height="11" rx="2" fill="#0f172a"/>
+          <circle cx="94" cy="99" r="2.5" fill="#0f172a"/>
+        </svg>
+      </div>
+
+      <h2 id="modalTitulo" class="modal__titulo">¿Seguro que quieres borrar este apunte de tu biblioteca?</h2>
+      <p id="modalNombre" class="modal__apunte"></p>
+      <p id="modalTexto" class="modal__texto">Ojo: después no hay vuelta atrás, así que mira bien antes de apretar el botón rojo.</p>
+
+      <button id="btnAlternarImagen" class="modal__alternar" type="button" aria-controls="modalImagen" aria-pressed="false">
+        Ocultar imagen
+      </button>
+
+      <div class="modal__botones">
+        <button id="btnConfirmarBorrar" class="boton boton--peligro" type="button">Sí, borrar apunte</button>
+        <button id="btnCancelarBorrar" class="boton boton--neutro" type="button">Cancelar</button>
+      </div>
+    </div>
+  </div>
 
   <script src="js/datos.js"></script>
   <script src="js/app.js"></script>
