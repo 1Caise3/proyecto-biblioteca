@@ -1,173 +1,153 @@
 const CLAVE_ALMACENAMIENTO = 'ciberseguridad_guias';
 
+const CLAVE_RUTA = 'biblioteca_ruta_estudio';
+
+const CLAVE_IMAGEN_MODAL = 'biblioteca_ocultar_imagen';
+
 const GUIAS_BASE = [
   {
     id: 1,
-    titulo: 'Usar contraseñas largas y únicas',
+    titulo: 'Contraseñas largas y que no se repitan',
     categoria: 'contraseñas',
     nivel: 'básico',
-    resumen: 'Una contraseña larga y diferente para cada cuenta reduce el daño si una se filtra.',
-    contenido: 'Usa frases de al menos 14 caracteres que combinen palabras, números y símbolos. Nunca repitas la misma contraseña en dos servicios y evita datos personales como fechas de nacimiento o nombres de mascotas.',
-    etiquetas: ['contraseñas', 'cuentas', 'higiene digital'],
+    resumen: 'Usa frases largas como clave para que no te jakeen el correo de la u y sea fácil acordarte en el examen. Y nunca uses la misma clave en todas tus cuentas.',
     fecha: '2026-10-01T09:00:00.000Z',
     leida: true,
     favorita: false
   },
   {
     id: 2,
-    titulo: 'Activar la verificación en dos pasos (MFA)',
+    titulo: 'Activa el doble paso (aunque te dé flojera)',
     categoria: 'contraseñas',
     nivel: 'intermedio',
-    resumen: 'El segundo factor protege tu cuenta incluso cuando la contraseña ya fue robada.',
-    contenido: 'Activa MFA en el correo, la banca y las redes sociales. Prefiere aplicaciones de autenticación o llaves físicas antes que mensajes SMS, porque los SMS pueden ser interceptados con ataques de intercambio de SIM.',
-    etiquetas: ['mfa', 'autenticación', 'cuentas'],
+    resumen: 'Con el doble paso, aunque te roben la clave igual no pueden entrar porque les falta el código de tu celular. Actívalo primero en tu correo.',
     fecha: '2026-10-03T09:00:00.000Z',
     leida: true,
     favorita: true
   },
   {
     id: 3,
-    titulo: 'Reconocer correos de phishing',
+    titulo: 'Tips rápidos para que no te jakeen la cuenta de la universidad',
     categoria: 'correo',
     nivel: 'básico',
-    resumen: 'Aprende a detectar señales de suplantación antes de hacer clic en un enlace.',
-    contenido: 'Revisa el remitente real, desconfía de mensajes con urgencia o amenazas y pasa el cursor sobre los enlaces para ver el destino. Si dudas, entra al sitio escribiendo la dirección tú mismo y no abras adjuntos inesperados.',
-    etiquetas: ['phishing', 'correo', 'ingeniería social'],
+    resumen: 'Si un correo te mete apuro o te amenaza con cerrarte la cuenta, casi seguro es phishing. Antes de hacer clic, pasa el mouse por el enlace y mira a dónde va.',
     fecha: '2026-10-05T09:00:00.000Z',
     leida: false,
     favorita: true
   },
   {
     id: 4,
-    titulo: 'Configurar SPF, DKIM y DMARC',
+    titulo: 'SPF, DKIM y DMARC explicados fácil',
     categoria: 'correo',
     nivel: 'avanzado',
-    resumen: 'Estos registros DNS ayudan a evitar que suplanten el dominio de tu organización.',
-    contenido: 'SPF indica qué servidores pueden enviar correo por tu dominio, DKIM firma los mensajes y DMARC define qué hacer cuando fallan las verificaciones. Empieza con una política de monitoreo y luego endurécela de forma gradual.',
-    etiquetas: ['dns', 'spf', 'dkim', 'dmarc'],
+    resumen: 'Son tres configuraciones para que nadie mande correos haciéndose pasar por tu dominio. SPF es la lista de quién puede enviar, DKIM es la firma y DMARC dice qué hacer si algo falla.',
     fecha: '2026-10-08T09:00:00.000Z',
     leida: false,
     favorita: false
   },
   {
     id: 5,
-    titulo: 'Evitar redes Wi-Fi públicas sin protección',
+    titulo: 'Cuidado con el Wi-Fi gratis de la cafetería',
     categoria: 'redes',
     nivel: 'básico',
-    resumen: 'Las redes abiertas permiten que otras personas observen o alteren tu tráfico.',
-    contenido: 'Evita iniciar sesión en servicios sensibles desde una red pública. Si es necesario conectarte, usa una VPN confiable, verifica el nombre exacto de la red con el local y desactiva la conexión automática a redes abiertas.',
-    etiquetas: ['wifi', 'vpn', 'redes públicas'],
+    resumen: 'Una red abierta es como hablar en voz alta en un salón lleno: cualquiera puede escuchar. Si tienes que usarla, conéctate con VPN y no entres al banco.',
     fecha: '2026-10-10T09:00:00.000Z',
     leida: true,
     favorita: false
   },
   {
     id: 6,
-    titulo: 'Segmentar la red con VLAN',
+    titulo: 'Separar la red con VLAN',
     categoria: 'redes',
     nivel: 'avanzado',
-    resumen: 'Separar dispositivos por función limita hasta dónde puede llegar un atacante.',
-    contenido: 'Crea VLAN distintas para servidores, equipos de usuarios, invitados y dispositivos IoT. Aplica reglas de firewall entre segmentos y permite solo el tráfico estrictamente necesario entre ellos.',
-    etiquetas: ['vlan', 'firewall', 'segmentación'],
+    resumen: 'Es como tener cada curso en un salón con su propia puerta: si entran a uno, no llegan a todos los demás. Se separan servidores, usuarios e invitados.',
     fecha: '2026-10-13T09:00:00.000Z',
     leida: false,
     favorita: false
   },
   {
     id: 7,
-    titulo: 'Mantener el sistema y las aplicaciones actualizados',
+    titulo: 'Actualiza tu compu y tu cel, no lo dejes para mañana',
     categoria: 'dispositivos',
     nivel: 'básico',
-    resumen: 'Las actualizaciones corrigen vulnerabilidades que ya son conocidas por los atacantes.',
-    contenido: 'Activa las actualizaciones automáticas del sistema operativo, del navegador y de las aplicaciones. Retira los programas que ya no tienen soporte y reinicia el equipo cuando el sistema lo solicite.',
-    etiquetas: ['parches', 'actualizaciones', 'sistema operativo'],
+    resumen: 'Cada actualización tapa huecos de seguridad que los hackers ya conocen. Deja activadas las automáticas y reinicia cuando te lo pida.',
     fecha: '2026-10-16T09:00:00.000Z',
     leida: true,
     favorita: false
   },
   {
     id: 8,
-    titulo: 'Cifrar el disco de laptops y celulares',
+    titulo: 'Cifra el disco por si pierdes tu laptop',
     categoria: 'dispositivos',
     nivel: 'intermedio',
-    resumen: 'Si pierdes el equipo, el cifrado evita que otra persona lea tus archivos.',
-    contenido: 'Activa BitLocker en Windows, FileVault en macOS o el cifrado de almacenamiento en Android y iOS. Guarda la clave de recuperación en un lugar seguro y distinto al dispositivo.',
-    etiquetas: ['cifrado', 'bitlocker', 'robo'],
+    resumen: 'Si te roban la laptop, con el disco cifrado no pueden leer tus archivos. Guarda la clave de recuperación en otro lado o te quedas sin acceso tú también.',
     fecha: '2026-10-19T09:00:00.000Z',
     leida: false,
     favorita: false
   },
   {
     id: 9,
-    titulo: 'Validar y sanear todas las entradas del usuario',
+    titulo: 'Nunca confíes en lo que escribe el usuario',
     categoria: 'desarrollo seguro',
     nivel: 'intermedio',
-    resumen: 'Nunca confíes en los datos que llegan desde formularios, URLs o APIs.',
-    contenido: 'Valida tipo, longitud y formato en el servidor. Usa consultas parametrizadas contra inyección SQL y escapa la salida para prevenir XSS. En el navegador, muestra los datos como texto plano y nunca como código HTML.',
-    etiquetas: ['xss', 'sql injection', 'validación'],
+    resumen: 'Todo lo que llega de un formulario hay que revisarlo antes de usarlo. Esto sale en el parcial seguro: es lo que evita la inyección SQL y el XSS.',
     fecha: '2026-10-22T09:00:00.000Z',
     leida: false,
     favorita: true
   },
   {
     id: 10,
-    titulo: 'Compartir solo los datos personales necesarios',
+    titulo: 'No regales tus datos personales',
     categoria: 'privacidad',
     nivel: 'básico',
-    resumen: 'Cuantos menos datos entregues, menor es el impacto de una filtración.',
-    contenido: 'Revisa los permisos de tus aplicaciones y la configuración de privacidad de tus redes sociales. Evita publicar tu ubicación en tiempo real, documentos de identidad o información que sirva para adivinar tus preguntas de seguridad.',
-    etiquetas: ['privacidad', 'datos personales', 'redes sociales'],
+    resumen: 'Mientras menos datos publiques, menos cosas pueden usar en tu contra. Revisa los permisos de tus apps: ¿por qué una linterna pide tu ubicación?',
     fecha: '2026-10-25T09:00:00.000Z',
     leida: false,
     favorita: false
   }
 ];
 
-function copiarGuiasBase() {
-  return JSON.parse(JSON.stringify(GUIAS_BASE));
-}
-
-function guardarGuias(guias) {
-  localStorage.setItem(CLAVE_ALMACENAMIENTO, JSON.stringify(guias));
-}
-
-function obtenerGuias() {
-  try {
-    const guardado = localStorage.getItem(CLAVE_ALMACENAMIENTO);
-    if (guardado) {
-      const guias = JSON.parse(guardado);
-      if (Array.isArray(guias)) {
-        return guias;
-      }
-    }
-  } catch (error) {
-    console.error('No se pudieron leer las guías guardadas:', error);
+const RUTA_BASE = [
+  {
+    id: 1,
+    semana: 'Semana 1',
+    tema: 'Redes básicas',
+    descripcion: 'Repasar qué es una red, el Wi-Fi público y para qué sirve una VPN.',
+    completado: false
+  },
+  {
+    id: 2,
+    semana: 'Semana 2',
+    tema: 'Contraseñas seguras',
+    descripcion: 'Frases largas, gestor de contraseñas y no repetir claves.',
+    completado: false
+  },
+  {
+    id: 3,
+    semana: 'Semana 3',
+    tema: 'Evitar el phishing',
+    descripcion: 'Aprender a reconocer correos falsos y revisar los enlaces antes de abrirlos.',
+    completado: false
+  },
+  {
+    id: 4,
+    semana: 'Semana 4',
+    tema: 'Seguridad en mis dispositivos',
+    descripcion: 'Actualizaciones, cifrado del disco y bloqueo de pantalla.',
+    completado: false
+  },
+  {
+    id: 5,
+    semana: 'Semana 5',
+    tema: 'Programación segura',
+    descripcion: 'Validar entradas del usuario y entender la inyección SQL y el XSS.',
+    completado: false
+  },
+  {
+    id: 6,
+    semana: 'Semana 6',
+    tema: 'Repaso final para el parcial',
+    descripcion: 'Releer mis apuntes favoritos y hacer un simulacro con mis compañeros.',
+    completado: false
   }
-  const guiasBase = copiarGuiasBase();
-  guardarGuias(guiasBase);
-  return guiasBase;
-}
-
-function eliminarGuiaPorId(id) {
-  const guiasActualizadas = obtenerGuias().filter((guia) => guia.id !== id);
-  guardarGuias(guiasActualizadas);
-  return guiasActualizadas;
-}
-
-function restaurarDatosEjemplo() {
-  guardarGuias(copiarGuiasBase());
-}
-
-function exportarAJSON() {
-  const guias = obtenerGuias();
-  const contenido = JSON.stringify(guias, null, 2);
-  const blob = new Blob([contenido], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const enlace = document.createElement('a');
-  enlace.href = url;
-  enlace.download = 'guias-ciberseguridad.json';
-  document.body.appendChild(enlace);
-  enlace.click();
-  document.body.removeChild(enlace);
-  URL.revokeObjectURL(url);
-}
+];
