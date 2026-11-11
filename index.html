@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
-  <meta name="description" content="Mis apuntes de ciberseguridad ordenados para preparar los parciales.">
   <title>Equipo 8 | Biblioteca de buenas prácticas</title>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
@@ -12,8 +11,8 @@
 
   <header class="encabezado">
     <div class="encabezado__contenido">
-      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas</h1>
-      <p class="encabezado__subtitulo">Equipo 8 · Apuntes de ciberseguridad</p>
+      <h1 class="encabezado__titulo">Biblioteca de buenas prácticas de ciberseguridad</h1>
+      <p class="encabezado__subtitulo">Equipo 8</p>
       <button
         id="btnMenu"
         class="btn-hamburguesa"
@@ -33,7 +32,7 @@
           <a class="menu__enlace activo" href="index.html" aria-current="page">Inicio</a>
         </li>
         <li class="menu__item">
-          <a class="menu__enlace" href="agregar.html">Agregar apunte</a>
+          <a class="menu__enlace" href="agregar.html">Agregar práctica</a>
         </li>
         <li class="menu__item">
           <a class="menu__enlace" href="mi-ruta.html">Mi ruta</a>
@@ -44,31 +43,27 @@
 
   <main class="principal">
 
-    <p class="bienvenida">
-      Mis apuntes para el parcial, ordenados y explicados fácil para no olvidarme de nada antes de rendir.
-    </p>
-
     <section class="seccion resumen" aria-labelledby="tituloResumen">
-      <h2 id="tituloResumen" class="seccion__titulo">Mi resumen</h2>
+      <h2 id="tituloResumen" class="seccion__titulo">Resumen</h2>
       <div class="resumen__contadores">
         <article class="contador">
           <p class="contador__numero" id="statTotal">0</p>
-          <p class="contador__etiqueta">Apuntes en total</p>
+          <p class="contador__etiqueta">Prácticas en total</p>
         </article>
         <article class="contador">
           <p class="contador__numero" id="statLeidas">0</p>
-          <p class="contador__etiqueta">Apuntes leídos</p>
+          <p class="contador__etiqueta">Prácticas leídas</p>
         </article>
         <article class="contador">
           <p class="contador__numero" id="statFavoritas">0</p>
-          <p class="contador__etiqueta">Apuntes favoritos</p>
+          <p class="contador__etiqueta">Prácticas favoritas</p>
         </article>
       </div>
     </section>
 
     <section class="seccion filtros" aria-labelledby="tituloFiltros">
       <h2 id="tituloFiltros" class="seccion__titulo">Buscar y filtrar</h2>
-      <form id="formFiltros" class="formulario-grid" role="search" aria-label="Filtros de la biblioteca">
+      <form id="formFiltros" class="filtros__formulario" role="search" aria-label="Filtros de la biblioteca">
 
         <div class="campo">
           <label class="campo__label" for="inputBusqueda">Buscar por texto</label>
@@ -95,9 +90,9 @@
         </div>
 
         <div class="campo">
-          <label class="campo__label" for="selectNivel">Dificultad</label>
+          <label class="campo__label" for="selectNivel">Nivel</label>
           <select class="campo__control" id="selectNivel" name="nivel">
-            <option value="todos">Todas</option>
+            <option value="todos">Todos</option>
             <option value="básico">Básico</option>
             <option value="intermedio">Intermedio</option>
             <option value="avanzado">Avanzado</option>
@@ -107,8 +102,8 @@
         <div class="campo">
           <label class="campo__label" for="selectOrden">Ordenar por</label>
           <select class="campo__control" id="selectOrden" name="orden">
-            <option value="fecha">Fecha (los más nuevos primero)</option>
-            <option value="nivel">Dificultad (de básico a avanzado)</option>
+            <option value="fecha">Fecha</option>
+            <option value="nivel">Nivel</option>
           </select>
         </div>
 
@@ -124,43 +119,19 @@
     </section>
 
     <section class="seccion listado" aria-labelledby="tituloListado">
-      <h2 id="tituloListado" class="seccion__titulo">Mis apuntes</h2>
-      <div id="avisoGlobal" class="aviso aviso--exito" role="status" hidden></div>
+      <h2 id="tituloListado" class="seccion__titulo">Prácticas</h2>
       <div id="contenedorCards" class="tarjetas" aria-live="polite"></div>
       <div id="mensajeVacio" class="mensaje-vacio" hidden>
-        <p id="textoVacio">No hay apuntes para mostrar.</p>
+        <p>No hay prácticas para mostrar. Carga los datos de ejemplo o agrega una nueva práctica.</p>
       </div>
     </section>
 
   </main>
 
   <footer class="pie">
-    <p class="pie__texto">Proyecto-Biblioteca · Equipo 8</p>
-    <p class="pie__texto">Asignatura: Programación II · Ingeniería en Ciberseguridad</p>
+    <p class="pie__texto">Universidad · Carrera de Ingeniería en Ciberseguridad</p>
+    <p class="pie__texto">Asignatura: Programación II · Proyecto Equipo 8</p>
   </footer>
-
-  <div id="modalEliminar" class="modal" aria-hidden="true">
-    <div
-      class="modal__caja"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modalTitulo"
-      aria-describedby="modalTexto">
-
-      <h2 id="modalTitulo" class="modal__titulo">¿Seguro que quieres borrar este apunte de tu biblioteca?</h2>
-      <p id="modalNombre" class="modal__apunte"></p>
-      <p id="modalTexto" class="modal__texto">Ojo: después no hay vuelta atrás, así que mira bien antes de apretar el botón rojo.</p>
-
-      <button id="btnAlternarImagen" class="modal__alternar" type="button" aria-controls="modalImagen" aria-pressed="false">
-        Ocultar imagen
-      </button>
-
-      <div class="modal__botones">
-        <button id="btnConfirmarBorrar" class="boton boton--peligro" type="button">Sí, borrar apunte</button>
-        <button id="btnCancelarBorrar" class="boton boton--neutro" type="button">Cancelar</button>
-      </div>
-    </div>
-  </div>
 
   <script src="js/datos.js"></script>
   <script src="js/app.js"></script>
