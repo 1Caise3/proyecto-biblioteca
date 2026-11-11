@@ -6,6 +6,34 @@ document.addEventListener('DOMContentLoaded', () => {
     'intermedio': 'badge--intermedio',
     'avanzado': 'badge--avanzado'
   };
+  const LIMITES = {
+    tituloMin: 3,
+    tituloMax: 80,
+    resumenMin: 10,
+    resumenMax: 200,
+    pasosMin: 3,
+    pasosMax: 8,
+    pasoMin: 5,
+    pasoMax: 200,
+    etiquetasMax: 6,
+    etiquetaMax: 20
+  };
+
+  function esEnlaceSeguro(texto) {
+    if (typeof texto !== 'string') {
+      return false;
+    }
+    const limpio = texto.trim();
+    if (limpio === '' || /\s/.test(limpio)) {
+      return false;
+    }
+    try {
+      const url = new URL(limpio);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch (error) {
+      return false;
+    }
+  }
 
   function iniciarMenu() {
     const btnMenu = document.getElementById('btnMenu');
@@ -38,6 +66,49 @@ document.addEventListener('DOMContentLoaded', () => {
     return boton;
   }
 
+  function crearDetalle(guia) {
+    const detalle = document.createElement('details');
+    detalle.className = 'tarjeta__detalle';
+
+    const sumario = document.createElement('summary');
+    sumario.textContent = 'Ver pasos';
+    detalle.appendChild(sumario);
+
+    const pasos = Array.isArray(guia.pasos) ? guia.pasos : [];
+    if (pasos.length > 0) {
+      const lista = document.createElement('ol');
+      lista.className = 'tarjeta__pasos';
+      pasos.forEach((paso) => {
+        const item = document.createElement('li');
+        item.textContent = paso;
+        lista.appendChild(item);
+      });
+      detalle.appendChild(lista);
+    } else if (guia.contenido) {
+      const texto = document.createElement('p');
+      texto.textContent = guia.contenido;
+      detalle.appendChild(texto);
+    }
+
+    if (guia.fuente) {
+      const parrafo = document.createElement('p');
+      parrafo.className = 'tarjeta__fuente';
+      if (esEnlaceSeguro(guia.fuente)) {
+        const enlace = document.createElement('a');
+        enlace.href = new URL(guia.fuente.trim()).href;
+        enlace.target = '_blank';
+        enlace.rel = 'noopener noreferrer';
+        enlace.textContent = 'Ver fuente';
+        parrafo.appendChild(enlace);
+      } else {
+        parrafo.textContent = 'Fuente: ' + guia.fuente;
+      }
+      detalle.appendChild(parrafo);
+    }
+
+    return detalle;
+  }
+
   function crearTarjeta(guia, alActualizar) {
     const tarjeta = document.createElement('article');
     tarjeta.className = 'tarjeta';
@@ -58,14 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resumen.className = 'tarjeta__resumen';
     resumen.textContent = guia.resumen;
 
-    const detalle = document.createElement('details');
-    detalle.className = 'tarjeta__detalle';
-    const sumario = document.createElement('summary');
-    sumario.textContent = 'Ver detalle';
-    const textoDetalle = document.createElement('p');
-    textoDetalle.textContent = guia.contenido;
-    detalle.appendChild(sumario);
-    detalle.appendChild(textoDetalle);
+    const detalle = crearDetalle(guia);
 
     const etiquetas = document.createElement('div');
     etiquetas.className = 'tarjeta__etiquetas';
@@ -89,6 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
       alActualizar();
     });
 
+    const btnEditar = document.createElement('a');
+    btnEditar.className = 'boton boton--secundario';
+    btnEditar.href = 'agregar.html?editar=' + encodeURIComponent(guia.id);
+    btnEditar.textContent = '✎ Editar';
+
     const btnEliminar = crearBoton('🗑 Eliminar', false, () => {
       const confirmado = confirm('¿Seguro que deseas eliminar la práctica "' + guia.titulo + '"?');
       if (confirmado) {
@@ -101,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     acciones.appendChild(btnLeida);
     acciones.appendChild(btnFavorita);
+    acciones.appendChild(btnEditar);
     acciones.appendChild(btnEliminar);
 
     tarjeta.appendChild(badge);
@@ -149,7 +219,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const nivel = selectNivel.value;
 
       return guias.filter((guia) => {
-        const textoGuia = [guia.titulo, guia.resumen, guia.contenido, (guia.etiquetas || []).join(' ')]
+        const textoGuia = [
+          guia.titulo,
+          guia.resumen,
+          guia.contenido || '',
+          (guia.pasos || []).join(' '),
+          (guia.etiquetas || []).join(' ')
+        ]
           .join(' ')
           .toLowerCase();
         const coincideTexto = texto === '' || textoGuia.includes(texto);
@@ -183,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     selectOrden.addEventListener('change', mostrarVista);
 
     btnCargarEjemplos.addEventListener('click', () => {
-      restaurarDatosEjemplo();
+      agregarDatosEjemplo();
       mostrarVista();
     });
 
@@ -198,60 +274,187 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const CAMPOS = ['titulo', 'categoria', 'nivel', 'resumen', 'pasos', 'fuente', 'etiquetas'];
     const mensaje = document.getElementById('mensajeFormulario');
+    const tituloFormulario = document.getElementById('tituloFormulario');
+    const btnGuardar = document.getElementById('btnGuardar');
+    const enlaceCancelar = document.getElementById('enlaceCancelar');
 
     function mostrarMensaje(texto, tipo) {
       mensaje.textContent = texto;
       mensaje.className = 'mensaje-form mensaje-form--' + tipo;
+      mensaje.setAttribute('role', tipo === 'error' ? 'alert' : 'status');
       mensaje.hidden = false;
     }
 
-    formulario.addEventListener('submit', (e) => {
-      e.preventDefault();
+    function mostrarError(campo, texto) {
+      const control = formulario.elements[campo];
+      const error = document.getElementById('error-' + campo);
+      error.textContent = texto;
+      error.hidden = false;
+      control.setAttribute('aria-invalid', 'true');
+    }
 
-      const titulo = formulario.elements['titulo'].value.trim();
-      const categoria = formulario.elements['categoria'].value.trim();
-      const nivel = formulario.elements['nivel'].value.trim();
-      const resumen = formulario.elements['resumen'].value.trim();
-      const contenido = formulario.elements['contenido'].value.trim();
-      const etiquetasTexto = formulario.elements['etiquetas'].value;
+    function limpiarError(campo) {
+      const control = formulario.elements[campo];
+      const error = document.getElementById('error-' + campo);
+      error.textContent = '';
+      error.hidden = true;
+      control.removeAttribute('aria-invalid');
+    }
 
-      const faltantes = [];
-      if (titulo === '') faltantes.push('título');
-      if (categoria === '') faltantes.push('categoría');
-      if (nivel === '') faltantes.push('nivel');
-      if (resumen === '') faltantes.push('resumen');
-      if (contenido === '') faltantes.push('detalle');
+    function limpiarErrores() {
+      CAMPOS.forEach(limpiarError);
+      mensaje.hidden = true;
+    }
 
-      if (faltantes.length > 0) {
-        mostrarMensaje('Completa los campos obligatorios: ' + faltantes.join(', ') + '.', 'error');
-        return;
-      }
+    function separarLineas(texto) {
+      return texto
+        .split('\n')
+        .map((linea) => linea.trim())
+        .filter((linea) => linea !== '');
+    }
 
-      const etiquetas = etiquetasTexto
+    function separarEtiquetas(texto) {
+      return texto
         .split(',')
         .map((etiqueta) => etiqueta.trim())
         .filter((etiqueta) => etiqueta !== '');
+    }
 
-      const nuevaGuia = {
+    function validar() {
+      const errores = {};
+      const titulo = formulario.elements['titulo'].value.trim();
+      const categoria = formulario.elements['categoria'].value;
+      const nivel = formulario.elements['nivel'].value;
+      const resumen = formulario.elements['resumen'].value.trim();
+      const pasos = separarLineas(formulario.elements['pasos'].value);
+      const fuente = formulario.elements['fuente'].value.trim();
+      const etiquetas = separarEtiquetas(formulario.elements['etiquetas'].value);
+
+      if (titulo === '') {
+        errores.titulo = 'El título es obligatorio.';
+      } else if (titulo.length < LIMITES.tituloMin || titulo.length > LIMITES.tituloMax) {
+        errores.titulo = 'El título debe tener entre ' + LIMITES.tituloMin + ' y ' + LIMITES.tituloMax + ' caracteres.';
+      }
+
+      if (!CATEGORIAS.includes(categoria)) {
+        errores.categoria = 'Selecciona una categoría.';
+      }
+
+      if (!Object.prototype.hasOwnProperty.call(ORDEN_NIVEL, nivel)) {
+        errores.nivel = 'Selecciona un nivel.';
+      }
+
+      if (resumen === '') {
+        errores.resumen = 'El resumen es obligatorio.';
+      } else if (resumen.length < LIMITES.resumenMin || resumen.length > LIMITES.resumenMax) {
+        errores.resumen = 'El resumen debe tener entre ' + LIMITES.resumenMin + ' y ' + LIMITES.resumenMax + ' caracteres.';
+      }
+
+      if (pasos.length < LIMITES.pasosMin || pasos.length > LIMITES.pasosMax) {
+        errores.pasos = 'Escribe entre ' + LIMITES.pasosMin + ' y ' + LIMITES.pasosMax + ' pasos, uno por línea.';
+      } else if (pasos.some((paso) => paso.length < LIMITES.pasoMin || paso.length > LIMITES.pasoMax)) {
+        errores.pasos = 'Cada paso debe tener entre ' + LIMITES.pasoMin + ' y ' + LIMITES.pasoMax + ' caracteres.';
+      }
+
+      if (fuente === '') {
+        errores.fuente = 'La fuente es obligatoria.';
+      } else if (!esEnlaceSeguro(fuente)) {
+        errores.fuente = 'Escribe un enlace válido que empiece por http:// o https://.';
+      }
+
+      if (etiquetas.length > LIMITES.etiquetasMax) {
+        errores.etiquetas = 'Escribe máximo ' + LIMITES.etiquetasMax + ' etiquetas.';
+      } else if (etiquetas.some((etiqueta) => etiqueta.length > LIMITES.etiquetaMax)) {
+        errores.etiquetas = 'Cada etiqueta puede tener hasta ' + LIMITES.etiquetaMax + ' caracteres.';
+      }
+
+      return {
+        errores: errores,
+        datos: {
+          titulo: titulo,
+          categoria: categoria,
+          nivel: nivel,
+          resumen: resumen,
+          pasos: pasos,
+          fuente: fuente,
+          etiquetas: etiquetas
+        }
+      };
+    }
+
+    const parametros = new URLSearchParams(window.location.search);
+    let guiaEditada = null;
+    if (parametros.has('editar')) {
+      guiaEditada = obtenerGuiaPorId(Number(parametros.get('editar')));
+      if (!guiaEditada) {
+        mostrarMensaje('No se encontró la práctica que quieres editar.', 'error');
+      }
+    }
+
+    if (guiaEditada) {
+      const pasosActuales = Array.isArray(guiaEditada.pasos)
+        ? guiaEditada.pasos
+        : (guiaEditada.contenido ? [guiaEditada.contenido] : []);
+      formulario.elements['titulo'].value = guiaEditada.titulo || '';
+      formulario.elements['categoria'].value = guiaEditada.categoria || '';
+      formulario.elements['nivel'].value = guiaEditada.nivel || '';
+      formulario.elements['resumen'].value = guiaEditada.resumen || '';
+      formulario.elements['pasos'].value = pasosActuales.join('\n');
+      formulario.elements['fuente'].value = guiaEditada.fuente || '';
+      formulario.elements['etiquetas'].value = (guiaEditada.etiquetas || []).join(', ');
+      tituloFormulario.textContent = 'Editar práctica';
+      btnGuardar.textContent = 'Guardar cambios';
+      enlaceCancelar.hidden = false;
+    }
+
+    formulario.addEventListener('input', (e) => {
+      if (CAMPOS.includes(e.target.name)) {
+        limpiarError(e.target.name);
+      }
+    });
+
+    formulario.addEventListener('submit', (e) => {
+      e.preventDefault();
+      limpiarErrores();
+
+      const resultado = validar();
+      const camposConError = CAMPOS.filter((campo) => resultado.errores[campo]);
+
+      if (camposConError.length > 0) {
+        camposConError.forEach((campo) => mostrarError(campo, resultado.errores[campo]));
+        mostrarMensaje('Revisa los campos marcados en rojo.', 'error');
+        formulario.elements[camposConError[0]].focus();
+        return;
+      }
+
+      if (guiaEditada) {
+        const guardado = actualizarGuia(guiaEditada.id, resultado.datos);
+        if (guardado) {
+          mostrarMensaje('Los cambios se guardaron correctamente.', 'exito');
+        } else {
+          mostrarMensaje('No se pudieron guardar los cambios.', 'error');
+        }
+        return;
+      }
+
+      const nuevaGuia = Object.assign({}, resultado.datos, {
         id: Date.now(),
-        titulo: titulo,
-        categoria: categoria,
-        nivel: nivel,
-        resumen: resumen,
-        contenido: contenido,
-        etiquetas: etiquetas,
         fecha: new Date().toISOString(),
         leida: false,
         favorita: false
-      };
+      });
 
       const guias = obtenerGuias();
       guias.push(nuevaGuia);
-      guardarGuias(guias);
 
-      formulario.reset();
-      mostrarMensaje('La práctica se guardó correctamente.', 'exito');
+      if (guardarGuias(guias)) {
+        formulario.reset();
+        mostrarMensaje('La práctica se guardó correctamente.', 'exito');
+      } else {
+        mostrarMensaje('No se pudo guardar la práctica.', 'error');
+      }
     });
   }
 

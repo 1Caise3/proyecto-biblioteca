@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
-  <title>| Agregar Práctica</title>
+  <title>Agregar práctica | Biblioteca de buenas prácticas</title>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -49,12 +49,15 @@
 
         <div class="campo">
           <label class="campo__label" for="titulo">Título de la práctica *</label>
-          <input class="campo__control" type="text" id="titulo" name="titulo" required>
+          <input class="campo__control" type="text" id="titulo" name="titulo" required
+            aria-describedby="error-titulo">
+          <p id="error-titulo" class="campo__error" hidden></p>
         </div>
 
         <div class="campo">
           <label class="campo__label" for="categoria">Categoría *</label>
-          <select class="campo__control" id="categoria" name="categoria" required>
+          <select class="campo__control" id="categoria" name="categoria" required
+            aria-describedby="error-categoria">
             <option value="">Selecciona una categoría</option>
             <option value="contraseñas">Contraseñas</option>
             <option value="correo">Correo</option>
@@ -63,36 +66,57 @@
             <option value="desarrollo seguro">Desarrollo seguro</option>
             <option value="privacidad">Privacidad</option>
           </select>
+          <p id="error-categoria" class="campo__error" hidden></p>
         </div>
 
         <div class="campo">
           <label class="campo__label" for="nivel">Nivel de dificultad *</label>
-          <select class="campo__control" id="nivel" name="nivel" required>
+          <select class="campo__control" id="nivel" name="nivel" required
+            aria-describedby="error-nivel">
             <option value="">Selecciona un nivel</option>
             <option value="básico">Básico</option>
             <option value="intermedio">Intermedio</option>
             <option value="avanzado">Avanzado</option>
           </select>
+          <p id="error-nivel" class="campo__error" hidden></p>
         </div>
 
         <div class="campo">
-          <label class="campo__label" for="resumen">Resumen ejecutivo *</label>
-          <textarea class="campo__control" id="resumen" name="resumen" rows="3" required></textarea>
+          <label class="campo__label" for="resumen">Resumen *</label>
+          <textarea class="campo__control" id="resumen" name="resumen" rows="3" required
+            aria-describedby="ayuda-resumen error-resumen"></textarea>
+          <p id="ayuda-resumen" class="campo__ayuda">Entre 10 y 200 caracteres.</p>
+          <p id="error-resumen" class="campo__error" hidden></p>
         </div>
 
         <div class="campo">
-          <label class="campo__label" for="contenido">Detalle de la buena práctica *</label>
-          <textarea class="campo__control" id="contenido" name="contenido" rows="6" required></textarea>
+          <label class="campo__label" for="pasos">Pasos de la guía *</label>
+          <textarea class="campo__control" id="pasos" name="pasos" rows="6" required
+            aria-describedby="ayuda-pasos error-pasos"></textarea>
+          <p id="ayuda-pasos" class="campo__ayuda">Escribe de 3 a 8 pasos, uno por línea.</p>
+          <p id="error-pasos" class="campo__error" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="fuente">Fuente (enlace) *</label>
+          <input class="campo__control" type="url" id="fuente" name="fuente" required
+            placeholder="https://ejemplo.com/guia" autocomplete="off"
+            aria-describedby="ayuda-fuente error-fuente">
+          <p id="ayuda-fuente" class="campo__ayuda">Debe empezar por http:// o https://.</p>
+          <p id="error-fuente" class="campo__error" hidden></p>
         </div>
 
         <div class="campo">
           <label class="campo__label" for="etiquetas">Etiquetas (separadas por coma)</label>
-          <input class="campo__control" type="text" id="etiquetas" name="etiquetas" placeholder="Ej: mfa, contraseñas, auth">
+          <input class="campo__control" type="text" id="etiquetas" name="etiquetas"
+            placeholder="Ej: mfa, contraseñas, auth" aria-describedby="error-etiquetas">
+          <p id="error-etiquetas" class="campo__error" hidden></p>
         </div>
 
         <button type="submit" id="btnGuardar" class="boton boton--primario">Guardar Práctica</button>
+        <a id="enlaceCancelar" class="boton boton--secundario" href="index.html" hidden>Volver al inicio</a>
 
-        <div id="mensajeFormulario" class="mensaje-form" hidden></div>
+        <div id="mensajeFormulario" class="mensaje-form" role="status" hidden></div>
 
       </form>
     </section>

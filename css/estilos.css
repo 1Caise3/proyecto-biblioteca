@@ -1,8 +1,8 @@
 :root {
-  --color-fondo: #f4fff5;
+  --color-fondo: #121212;
   --color-superficie: #141e33;
   --color-superficie-hover: #1e293b;
-  --color-primario: #b81414;
+  --color-primario: #7CFC00;
   --color-secundario: #0284c7;
   --color-texto: #f8fafc;
   --color-texto-suave: #94a3b8;
@@ -474,6 +474,7 @@ textarea.campo__control {
   .formulario__contenido .campo:nth-child(4),
   .formulario__contenido .campo:nth-child(5),
   .formulario__contenido .campo:nth-child(6),
+  .formulario__contenido .campo:nth-child(7),
   .formulario__contenido .boton,
   .formulario__contenido .mensaje-form {
     grid-column: 1 / -1;
@@ -557,4 +558,40 @@ textarea.campo__control {
 .boton--peligro:hover {
   background-color: #f87171;
   color: var(--color-fondo);
+}
+
+a.boton {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.campo__ayuda {
+  font-size: 0.8rem;
+  color: var(--color-texto-suave);
+}
+
+.campo__error {
+  font-size: 0.85rem;
+  color: #f87171;
+}
+
+.campo__control[aria-invalid="true"] {
+  border-color: #f87171;
+}
+
+.tarjeta__pasos {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+  color: var(--color-texto-suave);
+  font-size: 0.9rem;
+}
+
+.tarjeta__pasos li {
+  margin-bottom: 0.3rem;
+}
+
+.tarjeta__fuente {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
 }
